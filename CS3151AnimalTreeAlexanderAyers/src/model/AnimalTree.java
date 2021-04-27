@@ -62,17 +62,51 @@ public class AnimalTree implements Iterable<Response> {
 	public Iterator<Response> iterator() {
 		return new LevelOrderIterator();
 	}
-	
+
 	public void insert(AnimalNode selectedNode, Response newAnswer, Response newQuestion, NodeDirection direction) {
 		AnimalNode newAnimal = new AnimalNode(newAnswer);
 		AnimalNode questionNode = new AnimalNode(newQuestion);
+		if (this.root.getValue().getType().equals(ResponseType.ANSWER)) {
+			this.firstTimeInsert(selectedNode, direction, newAnimal, questionNode);
+		} else {
+			this.primaryInsert(selectedNode, direction, newAnimal, questionNode);
+		}
+
+	}
+
+	/**
+	 * @param selectedNode
+	 * @param direction
+	 * @param newAnimal
+	 * @param questionNode
+	 */
+	private void firstTimeInsert(AnimalNode selectedNode, NodeDirection direction, AnimalNode newAnimal,
+			AnimalNode questionNode) {
+		this.root = questionNode;
+		if (direction.equals(NodeDirection.YES)) {
+			this.root.setLeftChild(newAnimal);
+			this.root.setRightChild(selectedNode);
+		} else {
+			this.root.setRightChild(newAnimal);
+			this.root.setLeftChild(selectedNode);
+		}
+	}
+
+	/**
+	 * @param selectedNode
+	 * @param direction
+	 * @param newAnimal
+	 * @param questionNode
+	 */
+	private void primaryInsert(AnimalNode selectedNode, NodeDirection direction, AnimalNode newAnimal,
+			AnimalNode questionNode) {
 		AnimalNode parent = selectedNode.getParent();
-		if(parent.getLeftChild().getValue().equals(selectedNode.getValue())) {
+		if (parent.getLeftChild().getValue().equals(selectedNode.getValue())) {
 			parent.setLeftChild(questionNode);
 		} else {
 			parent.setRightChild(questionNode);
 		}
-		if(direction.equals(NodeDirection.YES)) {
+		if (direction.equals(NodeDirection.YES)) {
 			questionNode.setLeftChild(newAnimal);
 			questionNode.setRightChild(selectedNode);
 		} else {
