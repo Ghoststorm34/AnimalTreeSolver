@@ -3,9 +3,16 @@ package model;
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
-
+/**
+ * Models a tree containing questions and answers for animals.
+ * 
+ * @author Alexander Ayers
+ * @version Spring 2021
+ *
+ */
 public class AnimalTree implements Iterable<Response> {
 	private AnimalNode root;
+	private AnimalNode current;
 
 	/**
 	 * Instantiates an empty animal guessing game tree
@@ -15,6 +22,7 @@ public class AnimalTree implements Iterable<Response> {
 	 */
 	public AnimalTree() {
 		this.root = null;
+		this.current = this.root;
 	}
 
 	/**
@@ -26,6 +34,7 @@ public class AnimalTree implements Iterable<Response> {
 	 */
 	public AnimalTree(AnimalNode root) {
 		this.root = root;
+		this.current = this.root;
 	}
 
 	/**
@@ -37,6 +46,60 @@ public class AnimalTree implements Iterable<Response> {
 	 */
 	public AnimalNode getRoot() {
 		return this.root;
+	}
+
+	/**
+	 * Traverses to the right child of the current node and sets the current node to
+	 * the right child.
+	 * 
+	 * @precondition getCurrent() != null
+	 * @postcondition ( getCurrent().getValue().getType() != ResponseType.ANSWER AND
+	 *                getCurrent().getHasRightChild() ) IMPLIES ( getCurrent() ==
+	 *                getCurrent().getRightChild() )
+	 * 
+	 * @return whether the node was traversed or not.
+	 */
+	public boolean traverseRightChild() {
+		if (this.current == null) {
+			return false;
+		}
+		if (!this.current.getValue().getType().equals(ResponseType.ANSWER) && this.current.hasRightChild()) {
+			this.current = this.current.getRightChild();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Traverses to the left child of the current node and sets the current node to
+	 * the left child.
+	 * 
+	 * @precondition getCurrent() != null
+	 * @postcondition ( getCurrent().getValue().getType() != ResponseType.ANSWER AND
+	 *                getCurrent().hasLeftChild() ) IMPLIES ( getCurrent() ==
+	 *                getCurrent().getLeftChild() )
+	 * 
+	 * @return whether the node was traversed or not.
+	 */
+	public boolean traverseLeftChild() {
+		if (this.current == null) {
+			return false;
+		}
+		if (!this.current.getValue().getType().equals(ResponseType.ANSWER) && this.current.hasLeftChild()) {
+			this.current = this.current.getRightChild();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Resets the current node to the start of the tree.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 */
+	public void resetCurrent() {
+		this.current = this.root;
 	}
 
 	/**
@@ -113,6 +176,10 @@ public class AnimalTree implements Iterable<Response> {
 			questionNode.setRightChild(newAnimal);
 			questionNode.setLeftChild(selectedNode);
 		}
+	}
+
+	public AnimalNode getCurrent() {
+		return current;
 	}
 
 	/**
