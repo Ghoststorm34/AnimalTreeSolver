@@ -1,35 +1,32 @@
 package application;
 	
 import javafx.application.Application;
-import javafx.stage.Stage;
-import model.AnimalNode;
-import model.AnimalTree;
-import model.NodeDirection;
-import model.Response;
-import model.ResponseType;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import view.MainCodeBehind;
 
 
-public class Main {
+public class Main extends Application{
 
 	
-	public static void main(String[] args) {
-		Response resp1 = new Response("Is your animal a mammal?", ResponseType.QUESTION);
-		Response resp2 = new Response("Lion", ResponseType.ANSWER);
-		Response resp3 = new Response("Dolphin", ResponseType.ANSWER);
-		AnimalNode node1 = new AnimalNode(resp1);
-		AnimalNode node2 = new AnimalNode(resp2);
-		AnimalNode node3 = new AnimalNode(resp3);
-		node1.setLeftChild(node2);
-		node1.setRightChild(node3);
-		AnimalTree tree = new AnimalTree(node1);
+	public static void main(String[] args) {		
+		launch(args);
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+//		FXMLLoader loader = new FXMLLoader();
+//		loader.setController(new MainCodeBehind());
+//		loader.setLocation(getClass().getResource("/view/MainGUI.fxml"));
+//		Pane pane = new Pane(loader.load());
+		Parent pane = FXMLLoader.load(getClass().getResource("/view/MainGUI.fxml"));
 		
-		Response ans = new Response("Woodpecker", ResponseType.ANSWER);
-		Response ques = new Response("Is your animal a bird?", ResponseType.QUESTION);
-		
-		tree.insert(node3, ans, ques, NodeDirection.YES);
-		
-		System.out.println(tree.getRoot().getRightChild().getLeftChild().getValue().getValue());
+		Scene scene = new Scene(pane);
+		primaryStage.setTitle("Welcome");
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 }

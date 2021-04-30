@@ -1,48 +1,20 @@
 package view;
 
+import controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 public class MainCodeBehind {
-   
+  
+	
 	@FXML
-    private GridPane newQuestionPane;
+    private MenuItem saveButton;
 
     @FXML
-    private MenuItem saveButton3;
-
-    @FXML
-    private MenuItem loadButton3;
-
-    @FXML
-    private TextField animalNameTextField;
-
-    @FXML
-    private RadioButton yesRadioButton;
-
-    @FXML
-    private RadioButton noRadioButton;
-
-    @FXML
-    private Button submitButton1;
-
-    @FXML
-    private TextField questionTextBox;
-    
-    @FXML
-    private GridPane responsePane;
-
-    @FXML
-    private MenuItem saveButton1;
-
-    @FXML
-    private MenuItem loadButton1;
+    private MenuItem loadButton;
 
     @FXML
     private Text responseValueText;
@@ -54,16 +26,20 @@ public class MainCodeBehind {
     private Button noButton;
     
     @FXML
-    private GridPane mainPane;
-
-    @FXML
-    private MenuItem saveButton2;
-
-    @FXML
-    private MenuItem loadButton2;
-
-    @FXML
     private Button startButton;
+    
+    private MainController controller;
+    
+    public MainCodeBehind() {
+    	this.controller = new MainController();
+    }
+    
+    @FXML
+    public void initalize() {
+    	this.controller.startGame();
+    	this.responseValueText.textProperty().setValue(this.controller.getTree().getCurrent().getValue().getValue());
+    	this.responseValueText.setText("Blank");
+    }
 
     @FXML
     void handleNo(ActionEvent event) {
@@ -85,13 +61,11 @@ public class MainCodeBehind {
 
     }
     
-    @FXML
-    void handleSubmit(ActionEvent event) {
 
-    }
-    
     @FXML
     void startGame(ActionEvent event) {
-
+    	this.controller.startGame();
+    	this.responseValueText.setText(this.controller.getTree().getCurrent().getValue().getValue());
+    	this.startButton.setVisible(false);
     }
 }
