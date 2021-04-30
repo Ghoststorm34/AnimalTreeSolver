@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Optional;
-
 import controller.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +11,10 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import model.NodeDirection;
 import model.ResponseType;
 
@@ -35,6 +37,9 @@ public class MainCodeBehind {
 
 	@FXML
 	private Button startButton;
+	
+	@FXML
+	private Pane mainPane;
 
 	private MainController controller;
 
@@ -119,12 +124,27 @@ public class MainCodeBehind {
 
 	@FXML
 	void loadFile(ActionEvent event) {
-
+		FileChooser chooser = new FileChooser();
+		chooser.getExtensionFilters().add(new ExtensionFilter("All Files", "*.*"));
+		chooser.setTitle("Open File");
+		try {
+		this.controller.loadFile(chooser.showOpenDialog(this.mainPane.getScene().getWindow()));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		this.responseValueText.setText(this.controller.getTextOfCurrent());
 	}
 
 	@FXML
 	void saveFile(ActionEvent event) {
-
+		FileChooser chooser = new FileChooser();
+		chooser.getExtensionFilters().add(new ExtensionFilter("All Files", "*.*"));
+		chooser.setTitle("Save File");
+		try {
+		this.controller.saveFile(chooser.showSaveDialog(this.mainPane.getScene().getWindow()));
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

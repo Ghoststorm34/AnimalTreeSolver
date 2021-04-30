@@ -1,14 +1,16 @@
 package controller;
 
+import java.io.File;
 import java.util.Random;
 
+import data.AnimalTreeLoader;
+import data.AnimalTreeSaver;
 import model.AnimalNode;
 import model.AnimalTree;
 import model.NodeDirection;
 import model.Response;
 import model.ResponseType;
 
-// TODO: Auto-generated Javadoc
 /**
  * Controller for whole GUI.
  * 
@@ -102,7 +104,16 @@ public class MainController {
 	public void traverseLeft() {
 		this.tree.traverseLeftChild();
 	}
-
+	
+	public void saveFile(File file) {
+		AnimalTreeSaver.saveToFile(file, this.tree);
+	}
+	
+	public void loadFile(File file) {
+		AnimalTree newTree = AnimalTreeLoader.loadFromFile(file);
+		this.tree = newTree;
+		this.resetGame();
+	}
 	/**
 	 * Gets the tree.
 	 *
