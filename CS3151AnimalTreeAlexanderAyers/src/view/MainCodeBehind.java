@@ -36,9 +36,6 @@ public class MainCodeBehind {
     
     @FXML
     public void initalize() {
-    	this.controller.startGame();
-    	this.responseValueText.textProperty().setValue(this.controller.getTree().getCurrent().getValue().getValue());
-    	this.responseValueText.setText("Blank");
     }
 
     @FXML
@@ -66,6 +63,8 @@ public class MainCodeBehind {
     void startGame(ActionEvent event) {
     	this.controller.startGame();
     	this.responseValueText.setText(this.controller.getTree().getCurrent().getValue().getValue());
+    	this.yesButton.setVisible(true);
+    	this.noButton.setVisible(true);
     	this.startButton.setVisible(false);
     }
 }

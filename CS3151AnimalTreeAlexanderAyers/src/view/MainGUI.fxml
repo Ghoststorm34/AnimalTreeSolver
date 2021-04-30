@@ -29,14 +29,9 @@
                   <MenuItem fx:id="loadButton" mnemonicParsing="false" onAction="#loadFile" text="Load" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
         </menus>
       </MenuBar>
-      <Text fx:id="responseValueText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="460.458984375" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <Text fx:id="responseValueText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to the Animal Tree." textAlignment="CENTER" wrappingWidth="460.458984375" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
          <font>
             <Font size="30.0" />
          </font>
@@ -44,7 +39,7 @@
             <Insets top="52.0" />
          </GridPane.margin>
       </Text>
-      <Button fx:id="yesButton" mnemonicParsing="false" onAction="#handleYes" prefHeight="35.0" prefWidth="95.0" text="Yes" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+      <Button fx:id="yesButton" mnemonicParsing="false" onAction="#handleYes" prefHeight="35.0" prefWidth="95.0" text="Yes" visible="false" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <font>
             <Font size="16.0" />
          </font>
@@ -52,7 +47,7 @@
             <Insets left="100.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="noButton" mnemonicParsing="false" onAction="#handleNo" prefHeight="35.0" prefWidth="95.0" text="No" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+      <Button fx:id="noButton" mnemonicParsing="false" onAction="#handleNo" prefHeight="35.0" prefWidth="95.0" text="No" visible="false" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
          <font>
             <Font size="16.0" />
          </font>
@@ -60,6 +55,9 @@
             <Insets right="100.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="startButton" mnemonicParsing="false" onAction="#startGame" prefHeight="35.0" prefWidth="81.0" text="Start Game" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Button fx:id="startButton" mnemonicParsing="false" onAction="#startGame" prefHeight="47.0" prefWidth="106.0" text="Start Game" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
    </children>
 </GridPane>
