@@ -1,8 +1,9 @@
 package model;
 
-import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.Queue;
+import java.util.Stack;
+
+
 /**
  * Models a tree containing questions and answers for animals.
  * 
@@ -115,17 +116,29 @@ public class AnimalTree implements Iterable<Response> {
 
 	/**
 	 * Returns an iterator that traverses this animal guessing game tree in
-	 * level-order
+	 * pre-order
 	 * 
-	 * @pre none
-	 * @post none
-	 * @return a level-order iterator
+	 * @precondition none
+	 * @postcondition none
+	 * @return a pre-order iterator
 	 */
 	@Override
 	public Iterator<Response> iterator() {
-		return new LevelOrderIterator();
+		return new PreOrderIterator();
 	}
 
+	/**
+	 * Inserts both an answer node beneath the specified node and question node
+	 * above the specified node.
+	 * 
+	 * @precondition none
+	 * @postcondition Tree now has two more nodes within it.
+	 * 
+	 * @param selectedNode the specified node.
+	 * @param newAnswer    the new answer for a question
+	 * @param newQuestion  the new question for the answer
+	 * @param direction    the direction for the answer
+	 */
 	public void insert(AnimalNode selectedNode, Response newAnswer, Response newQuestion, NodeDirection direction) {
 		AnimalNode newAnimal = new AnimalNode(newAnswer);
 		AnimalNode questionNode = new AnimalNode(newQuestion);
@@ -137,30 +150,18 @@ public class AnimalTree implements Iterable<Response> {
 
 	}
 
-	/**
-	 * @param selectedNode
-	 * @param direction
-	 * @param newAnimal
-	 * @param questionNode
-	 */
 	private void firstTimeInsert(AnimalNode selectedNode, NodeDirection direction, AnimalNode newAnimal,
 			AnimalNode questionNode) {
 		this.root = questionNode;
 		if (direction.equals(NodeDirection.YES)) {
-			this.root.setLeftChild(newAnimal);
-			this.root.setRightChild(selectedNode);
-		} else {
 			this.root.setRightChild(newAnimal);
 			this.root.setLeftChild(selectedNode);
+		} else {
+			this.root.setLeftChild(newAnimal);
+			this.root.setRightChild(selectedNode);
 		}
 	}
 
-	/**
-	 * @param selectedNode
-	 * @param direction
-	 * @param newAnimal
-	 * @param questionNode
-	 */
 	private void primaryInsert(AnimalNode selectedNode, NodeDirection direction, AnimalNode newAnimal,
 			AnimalNode questionNode) {
 		AnimalNode parent = selectedNode.getParent();
@@ -170,45 +171,51 @@ public class AnimalTree implements Iterable<Response> {
 			parent.setRightChild(questionNode);
 		}
 		if (direction.equals(NodeDirection.YES)) {
-			questionNode.setLeftChild(newAnimal);
-			questionNode.setRightChild(selectedNode);
-		} else {
 			questionNode.setRightChild(newAnimal);
 			questionNode.setLeftChild(selectedNode);
+		} else {
+			questionNode.setLeftChild(newAnimal);
+			questionNode.setRightChild(selectedNode);
 		}
 	}
-
+	
+	/**
+	 * Gets the current node.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the current node.
+	 */
 	public AnimalNode getCurrent() {
 		return current;
 	}
 
-	/**
-	 * Class LevelOrderIterator
-	 * 
-	 * An iterator that traverses this animal guessing game tree in level-order
-	 */
-	protected class LevelOrderIterator implements Iterator<Response> {
-		private Queue<AnimalNode> nodeQueue;
+	protected class PreOrderIterator implements Iterator<Response> {
+		private Stack<AnimalNode> nextNodes;
 
-		public LevelOrderIterator() {
-			this.nodeQueue = new ArrayDeque<AnimalNode>();
-			this.nodeQueue.add(AnimalTree.this.root);
+		public PreOrderIterator() {
+			this.nextNodes = new Stack<AnimalNode>();
+			this.nextNodes.push(AnimalTree.this.root);
 		}
 
 		@Override
 		public boolean hasNext() {
-			return !this.nodeQueue.isEmpty();
+			return this.nextNodes.size() != 0;
 		}
 
 		@Override
 		public Response next() {
-			AnimalNode node = this.nodeQueue.remove();
-			if (node.hasLeftChild()) {
-				this.nodeQueue.add(node.getLeftChild());
+			AnimalNode node = this.nextNodes.pop();
+
+			if (node.getRightChild() != null) {
+				this.nextNodes.push(node.getRightChild());
 			}
-			if (node.hasRightChild()) {
-				this.nodeQueue.add(node.getRightChild());
+
+			if (node.getLeftChild() != null) {
+				this.nextNodes.push(node.getLeftChild());
 			}
+
 			return node.getValue();
 		}
 
