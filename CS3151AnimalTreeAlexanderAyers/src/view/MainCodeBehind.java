@@ -1,5 +1,6 @@
 package view;
 
+import java.io.File;
 import java.util.Optional;
 import controller.MainController;
 import javafx.event.ActionEvent;
@@ -37,7 +38,7 @@ public class MainCodeBehind {
 
 	@FXML
 	private Button startButton;
-	
+
 	@FXML
 	private Pane mainPane;
 
@@ -60,7 +61,11 @@ public class MainCodeBehind {
 			this.responseValueText.setText(this.controller.getTextOfCurrent());
 		} else {
 			this.controller.traverseRight();
-			this.responseValueText.setText(this.controller.getTextOfCurrent());
+			if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
+				this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
+			} else {
+				this.responseValueText.setText(this.controller.getTextOfCurrent());
+			}
 		}
 	}
 
@@ -69,8 +74,9 @@ public class MainCodeBehind {
 		String animal = this.showInputDialog("Input your Animal", "Name of your animal");
 		String question = this.showInputDialog("Input a question",
 				"Ensure this question differentiates itself from the guessed animal.");
-		boolean yesOrNo = this.showYesNoDialog("Answer to your Question", "What is the answer to the previously question that you inputted");
-		if(yesOrNo) {
+		boolean yesOrNo = this.showYesNoDialog("Answer to your Question",
+				"What is the answer to the previously question that you inputted");
+		if (yesOrNo) {
 			this.controller.addNewAnimal(animal, question, NodeDirection.YES);
 		} else {
 			this.controller.addNewAnimal(animal, question, NodeDirection.NO);
@@ -85,7 +91,11 @@ public class MainCodeBehind {
 			this.responseValueText.setText(this.controller.getTextOfCurrent());
 		} else {
 			this.controller.traverseLeft();
-			this.responseValueText.setText(this.controller.getTextOfCurrent());
+			if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
+				this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
+			} else {
+				this.responseValueText.setText(this.controller.getTextOfCurrent());
+			}
 		}
 	}
 
@@ -102,20 +112,20 @@ public class MainCodeBehind {
 		input.setContentText(content);
 		input.getDialogPane().lookupButton(ButtonType.CANCEL).setVisible(false);
 		Optional<String> textFromInput = input.showAndWait();
-		while(textFromInput.get().isBlank()) {
+		while (textFromInput.get().isBlank()) {
 			textFromInput = input.showAndWait();
 		}
 		return textFromInput.get();
 	}
-	
+
 	private boolean showYesNoDialog(String title, String content) {
 		ButtonType yesType = new ButtonType("Yes", ButtonBar.ButtonData.YES);
 		ButtonType noType = new ButtonType("No", ButtonBar.ButtonData.NO);
 		Alert input = new Alert(AlertType.CONFIRMATION, content, yesType, noType);
 		input.setTitle(title);
 		Optional<ButtonType> result = input.showAndWait();
-		
-		if(result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
+
+		if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
 			return true;
 		} else {
 			return false;
@@ -125,10 +135,11 @@ public class MainCodeBehind {
 	@FXML
 	void loadFile(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
+		chooser.getExtensionFilters().add(new ExtensionFilter("Text Files", "*.txt"));
 		chooser.getExtensionFilters().add(new ExtensionFilter("All Files", "*.*"));
 		chooser.setTitle("Open File");
 		try {
-		this.controller.loadFile(chooser.showOpenDialog(this.mainPane.getScene().getWindow()));
+			this.controller.loadFile(chooser.showOpenDialog(this.mainPane.getScene().getWindow()));
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -138,10 +149,11 @@ public class MainCodeBehind {
 	@FXML
 	void saveFile(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
+		chooser.getExtensionFilters().add(new ExtensionFilter("Text Files", "*.txt"));
 		chooser.getExtensionFilters().add(new ExtensionFilter("All Files", "*.*"));
 		chooser.setTitle("Save File");
 		try {
-		this.controller.saveFile(chooser.showSaveDialog(this.mainPane.getScene().getWindow()));
+			this.controller.saveFile(chooser.showSaveDialog(this.mainPane.getScene().getWindow()));
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
@@ -150,9 +162,11 @@ public class MainCodeBehind {
 	@FXML
 	void startGame(ActionEvent event) {
 		this.controller.startGame();
-		this.responseValueText.setText(this.controller.getTextOfCurrent());
+		this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
 		this.yesButton.setVisible(true);
 		this.noButton.setVisible(true);
 		this.startButton.setVisible(false);
+		this.saveButton.setDisable(false);
+		this.loadButton.setDisable(false);
 	}
 }

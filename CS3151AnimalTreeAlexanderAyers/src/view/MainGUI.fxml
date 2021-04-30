@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -23,11 +24,20 @@
    <children>
       <MenuBar GridPane.valignment="TOP">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="_File">
             <items>
-              <MenuItem fx:id="saveButton" mnemonicParsing="false" onAction="#saveFile" text="Save" />
-                  <MenuItem fx:id="loadButton" mnemonicParsing="false" onAction="#loadFile" text="Load" />
+              <MenuItem fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#saveFile" text="_Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem fx:id="loadButton" disable="true" mnemonicParsing="false" onAction="#loadFile" text="_Load">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
             </items>
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="F" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+               </accelerator>
           </Menu>
         </menus>
       </MenuBar>
@@ -39,6 +49,10 @@
             <Insets top="52.0" />
          </GridPane.margin>
       </Text>
+      <Button fx:id="startButton" mnemonicParsing="false" onAction="#startGame" prefHeight="47.0" prefWidth="106.0" text="Start Game" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+         <font>
+            <Font size="16.0" />
+         </font></Button>
       <Button fx:id="yesButton" mnemonicParsing="false" onAction="#handleYes" prefHeight="35.0" prefWidth="95.0" text="Yes" visible="false" GridPane.halignment="LEFT" GridPane.rowIndex="2">
          <font>
             <Font size="16.0" />
@@ -55,9 +69,5 @@
             <Insets right="100.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="startButton" mnemonicParsing="false" onAction="#startGame" prefHeight="47.0" prefWidth="106.0" text="Start Game" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-         <font>
-            <Font size="16.0" />
-         </font></Button>
    </children>
 </GridPane>
