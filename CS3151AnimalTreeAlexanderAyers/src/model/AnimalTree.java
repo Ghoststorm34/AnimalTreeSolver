@@ -87,7 +87,7 @@ public class AnimalTree implements Iterable<Response> {
 			return false;
 		}
 		if (!this.current.getValue().getType().equals(ResponseType.ANSWER) && this.current.hasLeftChild()) {
-			this.current = this.current.getRightChild();
+			this.current = this.current.getLeftChild();
 			return true;
 		}
 		return false;
@@ -154,11 +154,11 @@ public class AnimalTree implements Iterable<Response> {
 			AnimalNode questionNode) {
 		this.root = questionNode;
 		if (direction.equals(NodeDirection.YES)) {
-			this.root.setRightChild(newAnimal);
-			this.root.setLeftChild(selectedNode);
-		} else {
 			this.root.setLeftChild(newAnimal);
 			this.root.setRightChild(selectedNode);
+		} else {
+			this.root.setRightChild(newAnimal);
+			this.root.setLeftChild(selectedNode);
 		}
 	}
 
@@ -171,11 +171,11 @@ public class AnimalTree implements Iterable<Response> {
 			parent.setRightChild(questionNode);
 		}
 		if (direction.equals(NodeDirection.YES)) {
-			questionNode.setRightChild(newAnimal);
-			questionNode.setLeftChild(selectedNode);
-		} else {
 			questionNode.setLeftChild(newAnimal);
 			questionNode.setRightChild(selectedNode);
+		} else {
+			questionNode.setRightChild(newAnimal);
+			questionNode.setLeftChild(selectedNode);
 		}
 	}
 	
