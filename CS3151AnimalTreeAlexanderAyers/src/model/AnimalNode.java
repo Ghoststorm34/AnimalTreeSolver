@@ -1,5 +1,11 @@
 package model;
-
+/**
+ * Nodes for the animal guessing game tree.
+ * 
+ * @author Alexander Ayers
+ * @version Spring 2021
+ *
+ */
 public class AnimalNode {
 	private Response value;
 	private AnimalNode leftChild;
@@ -7,7 +13,7 @@ public class AnimalNode {
 	private AnimalNode parent;
 
 	/**
-	 * Instantiates a new binary node
+	 * Instantiates a new animal node
 	 * 
 	 * @pre none
 	 * @post getValue() == null AND !hasLeftChild() AND !hasRightChild() AND
@@ -18,7 +24,7 @@ public class AnimalNode {
 	}
 
 	/**
-	 * Instantiates a new binary node
+	 * Instantiates a new animal node
 	 *
 	 * @pre none
 	 * @post getValue() == value AND !hasLeftChild() AND !hasRightChild() AND

@@ -6,10 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main execution point for the system.
+ * @author Alexander Ayers
+ *
+ */
+public class Main extends Application {
 
-public class Main extends Application{
-
-	
+	/**
+	 * Executes the system.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param args the required arguments
+	 */
 	public static void main(String[] args) {		
 		launch(args);
 	}

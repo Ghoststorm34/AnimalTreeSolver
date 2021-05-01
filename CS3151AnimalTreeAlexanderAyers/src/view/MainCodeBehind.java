@@ -1,6 +1,5 @@
 package view;
 
-import java.io.File;
 import java.util.Optional;
 import controller.MainController;
 import javafx.event.ActionEvent;
@@ -18,7 +17,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.NodeDirection;
 import model.ResponseType;
-
+/**
+ * Code Behind for the Main GUI.
+ * 
+ * @author Alexander Ayers
+ * @version Spring 2021
+ *
+ */
 public class MainCodeBehind {
 
 	@FXML
@@ -125,11 +130,7 @@ public class MainCodeBehind {
 		input.setTitle(title);
 		Optional<ButtonType> result = input.showAndWait();
 
-		if (result.get().getButtonData().equals(ButtonBar.ButtonData.YES)) {
-			return true;
-		} else {
-			return false;
-		}
+		return result.get().getButtonData().equals(ButtonBar.ButtonData.YES);
 	}
 
 	@FXML

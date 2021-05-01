@@ -3,7 +3,6 @@ package model;
 import java.util.Iterator;
 import java.util.Stack;
 
-
 /**
  * Models a tree containing questions and answers for animals.
  * 
@@ -188,7 +187,7 @@ public class AnimalTree implements Iterable<Response> {
 	 * @return the current node.
 	 */
 	public AnimalNode getCurrent() {
-		return current;
+		return this.current;
 	}
 
 	protected class PreOrderIterator implements Iterator<Response> {

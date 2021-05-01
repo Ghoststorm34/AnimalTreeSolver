@@ -40,7 +40,9 @@ public class MainController {
 	 * @postcondition none
 	 */
 	public void startGame() {
-		String[] animals = { "Lion", "Whale", "Dog", "Dolphin", "Hawk" };
+		String[] animals = { "Lion", "Whale", "Poodle", "Dolphin", "Hawk", "Peacock", "Elephant", "Pidgeon", "Salmon",
+							"Ostrich", "Panda", "Zebra", "Mongoose", "Woodpecker", "Rhino", "Alligator", "Rattlesnake", "Shark",
+							"Chicken", "Goat", "Cow", "Bull" };
 		Random random = new Random();
 		int index = random.nextInt(animals.length);
 		AnimalNode node = new AnimalNode(new Response(animals[index], ResponseType.ANSWER));
@@ -89,7 +91,8 @@ public class MainController {
 	 * Traverses the current node to the right.
 	 * 
 	 * @precondition none
-	 * @postcondition getTree().getCurrent() == @prev getTree().getCurrent().getRightChild()
+	 * @postcondition getTree().getCurrent() == @prev
+	 *                getTree().getCurrent().getRightChild()
 	 */
 	public void traverseRight() {
 		this.tree.traverseRightChild();
@@ -99,21 +102,38 @@ public class MainController {
 	 * Traverses the current node to the left.
 	 * 
 	 * @precondition none
-	 * @postcondition getTree().getCurrent() == @prev getTree().getCurrent().getLeftChild()
+	 * @postcondition getTree().getCurrent() == @prev
+	 *                getTree().getCurrent().getLeftChild()
 	 */
 	public void traverseLeft() {
 		this.tree.traverseLeftChild();
 	}
-	
+
+	/**
+	 * Saves the existing tree to a specified file using a static method.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @param file the specified file
+	 */
 	public void saveFile(File file) {
 		AnimalTreeSaver.saveToFile(file, this.tree);
 	}
-	
+
+	/**
+	 * Loads a new tree from an existin file.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * @param file the specified file
+	 */
 	public void loadFile(File file) {
 		AnimalTree newTree = AnimalTreeLoader.loadFromFile(file);
 		this.tree = newTree;
 		this.resetGame();
 	}
+
 	/**
 	 * Gets the tree.
 	 *

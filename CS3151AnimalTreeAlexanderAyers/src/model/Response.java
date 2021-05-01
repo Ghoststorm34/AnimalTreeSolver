@@ -46,7 +46,7 @@ public class Response {
 	 * @return the value
 	 */
 	public String getValue() {
-		return value;
+		return this.value;
 	}
 
 	/**
@@ -58,15 +58,15 @@ public class Response {
 	 * @return the type
 	 */
 	public ResponseType getType() {
-		return type;
+		return this.type;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = prime * result + ((this.type == null) ? 0 : this.type.hashCode());
+		result = prime * result + ((this.value == null) ? 0 : this.value.hashCode());
 		return result;
 	}
 
