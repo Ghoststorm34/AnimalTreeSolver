@@ -60,18 +60,14 @@ public class MainCodeBehind {
 
 	@FXML
 	void handleNo(ActionEvent event) {
-		if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
+		if (this.currentNodeIsAnswer()) {
 			this.createNewAnimal();
 			this.controller.resetGame();
 			this.showInfoDialog("Game has been reset", "Game has inputted your new question. Please play again.");
 			this.responseValueText.setText(this.controller.getTextOfCurrent());
 		} else {
 			this.controller.traverseRight();
-			if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
-				this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
-			} else {
-				this.responseValueText.setText(this.controller.getTextOfCurrent());
-			}
+			this.setResponseText();
 		}
 	}
 
@@ -91,17 +87,25 @@ public class MainCodeBehind {
 
 	@FXML
 	void handleYes(ActionEvent event) {
-		if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
+		if (this.currentNodeIsAnswer()) {
 			this.showInfoDialog("Answer Correct", "Correct guess. Please hit the button to play again.");
 			this.controller.resetGame();
-			this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
+			this.setResponseText();
 		} else {
 			this.controller.traverseLeft();
-			if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
-				this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
-			} else {
-				this.responseValueText.setText(this.controller.getTextOfCurrent());
-			}
+			this.setResponseText();
+		}
+	}
+
+	private boolean currentNodeIsAnswer() {
+		return this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER);
+	}
+
+	private void setResponseText() {
+		if (this.currentNodeIsAnswer()) {
+			this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
+		} else {
+			this.responseValueText.setText(this.controller.getTextOfCurrent());
 		}
 	}
 
@@ -145,11 +149,7 @@ public class MainCodeBehind {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
-			this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
-		} else {
-			this.responseValueText.setText(this.controller.getTextOfCurrent());
-		}
+		this.setResponseText();
 	}
 
 	@FXML
