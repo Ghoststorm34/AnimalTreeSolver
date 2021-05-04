@@ -17,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import model.NodeDirection;
 import model.ResponseType;
+
 /**
  * Code Behind for the Main GUI.
  * 
@@ -93,7 +94,7 @@ public class MainCodeBehind {
 		if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
 			this.showInfoDialog("Answer Correct", "Correct guess. Please hit the button to play again.");
 			this.controller.resetGame();
-			this.responseValueText.setText(this.controller.getTextOfCurrent());
+			this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
 		} else {
 			this.controller.traverseLeft();
 			if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
@@ -144,7 +145,11 @@ public class MainCodeBehind {
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		this.responseValueText.setText(this.controller.getTextOfCurrent());
+		if (this.controller.getTree().getCurrent().getValue().getType().equals(ResponseType.ANSWER)) {
+			this.responseValueText.setText("Is your animal a " + this.controller.getTextOfCurrent() + "?");
+		} else {
+			this.responseValueText.setText(this.controller.getTextOfCurrent());
+		}
 	}
 
 	@FXML
